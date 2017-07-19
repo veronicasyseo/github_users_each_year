@@ -1,3 +1,4 @@
+require 'scraperwiki'
 #!/usr/bin/ruby
 
 # Scrapes Github's search results to count the number of signed up
@@ -48,7 +49,7 @@ def get_for_date(year, month)
     raise Exception, "Failed to match number of users in: " + inner unless m
     c = m[1].to_i
 
-    total = ScraperWiki.sqliteexecute("select sum(new_users) from swdata where `when` <= ?", [ display_date ])["data"][0][0]
+    total = ScraperWiki.sqliteexecute("select sum(new_users) from data where `when` <= ?", [ display_date ])["data"][0][0]
 
     ScraperWiki.save_sqlite(unique_keys=['when'], data={
       'when' => display_date, 'new_users' => c, 'total_users' => total
